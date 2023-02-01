@@ -13,10 +13,9 @@ export default createStore({
       massages: [] as HairCut[],
     } as HairCutCollection,
     hairCut_id: 0,
-    haircutCart: {
-      unit_amount: 0,
-      product_data: {} as HairCutProduct,
-    } as HaircutCart,
+    cart: {
+      haircut_carts: [] as HaircutCart[],
+    }
   },
   getters: {
     // All about haircuts
@@ -24,6 +23,8 @@ export default createStore({
     hairs: (state) => state.haircutsCollection.hairs,
     massages: (state) => state.haircutsCollection.massages,
     hairCut_id: (state) => +state.hairCut_id,
+    cart: (state) => state.cart,
+    cartCount: (state) => state.cart.haircut_carts.length,
   },
   mutations: {
     // haircuts mutations
@@ -35,6 +36,14 @@ export default createStore({
     },
     setMassages(state, massages: HairCut[]) {
       state.haircutsCollection.massages = massages;
+    },
+    // cart mutations
+    setHaircutCart(state, cart: HaircutCart) {
+        state.cart.haircut_carts.push({
+          name: cart.name,
+          description: cart.description,
+          price: cart.price,
+        });
     },
     // Mutations are used to set the state values
     initializeStore(state) {
@@ -53,6 +62,10 @@ export default createStore({
       commit("setHairs", haircutsCollection.hairs);
       commit("setMassages", haircutsCollection.massages);
     },
+    // cart actions
+    addHaircutCart({ commit }, cart: HaircutCart) {
+      commit("setHaircutCart", cart);
+    }
   },
   modules: {
   }

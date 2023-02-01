@@ -43,7 +43,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">PANIER (<strong>{{ $store.getters.nbItemsInCart }}</strong>)</a>
+                                <a class="nav-link" href="#">PANIER (<strong>{{ $store.getters.cartCount }}</strong>)</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">CONTACT</a>
