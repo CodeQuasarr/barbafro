@@ -24,11 +24,17 @@
                     <div class="d-flex text align-items-center">
                         <h3><span>{{ hair.name }}</span></h3>
                         <strong>{{ hair.price }}</strong>
-                        <button
-                            type="button" data-bs-toggle="modal" data-bs-target="#reservationStaticBackdrop"
-                            @click="intentionToBookThisProduct(hair)" class="ms-3 btn btn-dark"
+                        <button v-if="$store.getters.isLoggedIn"
+                                @click="intentionToBookThisProduct(hair)"
+                                type="button" data-bs-toggle="modal" data-bs-target="#reservationStaticBackdrop"
+                                class="ms-3 btn btn-dark"
                         >Ajouter
                         </button>
+                        <router-link v-else
+                                     :to="{ name: 'LOGIN' }"
+                                     class="ms-3 btn btn-dark"
+                        >Ajouter
+                        </router-link>
                     </div>
                     <div class="d-block"><p>{{ hair.description }}</p></div>
                 </div>
@@ -40,11 +46,17 @@
                     <div class="d-flex text align-items-center">
                         <h3><span>{{ beard.name }}</span></h3>
                         <strong>{{ beard.price }}</strong>
-                        <button
-                            type="button" data-bs-toggle="modal" data-bs-target="#reservationStaticBackdrop"
-                            @click="intentionToBookThisProduct(beard)" class="ms-3 btn btn-dark"
+                        <button v-if="$store.getters.isLoggedIn"
+                                @click="intentionToBookThisProduct(beard)"
+                                type="button" data-bs-toggle="modal" data-bs-target="#reservationStaticBackdrop"
+                                class="ms-3 btn btn-dark"
                         >Ajouter
                         </button>
+                        <router-link v-else
+                                     :to="{ name: 'LOGIN' }"
+                                     class="ms-3 btn btn-dark"
+                        >Ajouter
+                        </router-link>
                     </div>
                     <div class="d-block"><p>{{ beard.description }}</p></div>
                 </div>
@@ -55,11 +67,17 @@
                     <div class="d-flex text align-items-center">
                         <h3><span>{{ massage.name }}</span></h3>
                         <strong>{{ massage.price }}</strong>
-                        <button
+                        <button v-if="$store.getters.isLoggedIn"
+                            @click="intentionToBookThisProduct(massage)"
                             type="button" data-bs-toggle="modal" data-bs-target="#reservationStaticBackdrop"
-                            @click="intentionToBookThisProduct(massage)" class="ms-3 btn btn-dark"
+                             class="ms-3 btn btn-dark"
                         >Ajouter
                         </button>
+                        <router-link v-else
+                            :to="{ name: 'LOGIN' }"
+                             class="ms-3 btn btn-dark"
+                        >Ajouter
+                        </router-link>
                     </div>
                     <div class="d-block"><p>{{ massage.description }}</p></div>
                 </div>

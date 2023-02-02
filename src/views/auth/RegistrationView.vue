@@ -127,13 +127,11 @@ import {defineComponent} from 'vue';
 import {Form, Field, ErrorMessage} from 'vee-validate';
 import {User} from "@/types/UserType";
 import UserService from "@/services/User.service";
-import {FontIcon} from "@fortawesome/vue-fontawesome";
 
 export default defineComponent({
     name: "RegistrationView",
     components: {
-        FontIcon,
-        Form,
+       Form,
         Field,
         ErrorMessage,
     },

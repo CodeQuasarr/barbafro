@@ -5,7 +5,7 @@ import {User, UserLogResponse} from "@/types/UserType";
 export default createStore({
   state: {
     //---------------- User ----------------²
-    user: {},
+    user: {} as User,
     token: "" as string,
     //---------------- haircuts ----------------²
     haircutsCollection: {
@@ -19,6 +19,11 @@ export default createStore({
     }
   },
   getters: {
+
+    // Get if the user is logged in or not
+    isLoggedIn: (state) => !!state.token,
+    // redirect to login page if the user is not logged in
+    user_id: (state) => state.user.id,
     // All about haircuts
     beards: (state) => state.haircutsCollection.beards,
     hairs: (state) => state.haircutsCollection.hairs,

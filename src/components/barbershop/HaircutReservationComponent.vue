@@ -196,7 +196,7 @@ export default defineComponent({
                 start_date: this.reWriteDate(this.date),
                 start_time: this.get_selected_time,
                 haircut_id: 0,
-                user_id: 1,
+                user_id: this.$store.getters.user_id,
                 status: "pending",
             };
             await HaircutService.addReservationToCart(reservation).then((response) => {
