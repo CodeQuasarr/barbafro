@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/home/HomeView.vue'
 import PageNotFoundVew from "@/views/PageNotFoundView.vue";
 import LayoutView from "@/views/template/LayoutView.vue";
 import BarbershopView from "@/views/barbershop/BarbershopView.vue";
@@ -19,7 +19,14 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return {
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        }
+    }
 })
 
 export default router

@@ -30,7 +30,9 @@
                         </div>
                     </div>
                     <div class="col logo">
-                        <img alt="Vue logo" src="./../../assets/logo5.png"/>
+                        <router-link to="/">
+                            <img alt="Vue logo" src="./../../assets/logo5.png"/>
+                        </router-link>
                     </div>
                     <div class="col mt-4 d-none d-lg-block">
                         <ul class="nav">
@@ -54,9 +56,9 @@
                 <div class="row mx-0">
                     <ul class="nav justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <router-link :to="{ name: 'HAIR_CUT_LIST' }" class="nav-link">
                                 <strong>Reservation</strong>
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Actualités</a>
