@@ -37,7 +37,7 @@
                     <div class="col mt-4 d-none d-lg-block">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">COMPTE</a>
+                                <router-link :to="{name: 'LOGIN'}" class="nav-link">COMPTE</router-link>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">

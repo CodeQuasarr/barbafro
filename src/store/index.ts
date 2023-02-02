@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import {HairCut, HaircutCart, HairCutCollection, HairCutProduct} from "@/types/HaircutType";
+import {User, UserLogResponse} from "@/types/UserType";
 
 export default createStore({
   state: {
@@ -27,6 +28,28 @@ export default createStore({
     cartCount: (state) => state.cart.haircut_carts.length,
   },
   mutations: {
+    // Mutations are used to set the state values
+    setUser(state, user: User) {
+      state.user = user;
+      localStorage.setItem("user", JSON.stringify(user));
+    },
+    setToken(state, token: string) {
+      state.token = token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("token_type", "Bearer");
+    },
+
+    clearUser(state) {
+      state.user = {} as User;
+      localStorage.removeItem("user");
+    },
+
+    clearToken(state) {
+      state.token = "" as string;
+      localStorage.removeItem("token");
+      localStorage.removeItem("token_type");
+    },
+
     // haircuts mutations
     setBeards(state, beards: HairCut[]) {
       state.haircutsCollection.beards = beards;
@@ -56,6 +79,17 @@ export default createStore({
     },
   },
   actions: {
+
+    // login action to set the user and the token
+    login({ commit }, data: UserLogResponse) {
+      commit("setUser", data.user);
+      commit("setToken", data.token);
+    },
+    // logout action to clear the user and the token
+    logout({ commit }) {
+        commit("clearUser");
+        commit("clearToken");
+    },
     // haircuts actions
     haircutsCollection({ commit }, haircutsCollection: HairCutCollection) {
       commit("setBeards", haircutsCollection.beards);
