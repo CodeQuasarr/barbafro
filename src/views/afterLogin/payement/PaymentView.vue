@@ -18,13 +18,21 @@
                                     </div>
                                     <p class="card-text"><strong>{{ item.price }} €</strong></p>
                                 </div>
-                                <div v-for="(reservation, reservation_index) in item.reservations" :key="`reservation_item_${reservation.id}_${item.id}`" class="d-flex align-items-center justify-content-end mb-1">
+                                <div v-for="(reservation, reservation_index) in item.reservations"
+                                     :key="`reservation_item_${reservation.id}_${item.id}`"
+                                     class="d-flex align-items-center justify-content-end mb-1">
                                     <div class="me-3">{{ reservation.start_date }} à {{ reservation.start_time }}</div>
-                                     <button @click="removeReservationInItemFromCart(index, reservation_index, reservation.id)" class="btn btn-sm btn-danger"> <font-icon icon="eraser" /> </button>
+                                    <button
+                                        @click="removeReservationInItemFromCart(index, reservation_index, reservation.id)"
+                                        class="btn btn-sm btn-danger">
+                                        <font-icon icon="eraser"/>
+                                    </button>
                                 </div>
                             </div>
                             <div class="text-end mb-2 me-2">
-                                <button @click="removeItemFromCart(item.id, index)" class="btn btn-sm btn-dark">Supprimer</button>
+                                <button @click="removeItemFromCart(item.id, index)" class="btn btn-sm btn-dark">
+                                    Supprimer
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -53,14 +61,27 @@
                             <router-link to="/cgv">les conditions générales</router-link>
                             de Stripe.
                         </p>
-                        <p> <strong>Les produits sont renouvelés automatiquement</strong> jusqu'à ce qu'ils soient annulés, et sont
+                        <p><strong>Les produits sont renouvelés automatiquement</strong> jusqu'à ce qu'ils soient
+                            annulés, et sont
                             facturés sur votre méthode de paiement enregistrée. Désactivez le renouvellement automatique
                             dans votre compte GoDaddy
                         </p>
                     </div>
                     <div class="row">
-                        <button @click="getStripeSessionID()" v-if="!accept_conditions" class="btn btn-success mb-3 py-3">J'ACCEPTE</button>
-                        <button class="btn btn-success py-3" :disabled="!accept_conditions">COMPLETE L'ACHAT</button>
+                        <button @click="getStripeSessionID($store.getters.prices.with_taxes)" v-if="!accept_conditions"
+                                class="btn btn-success mb-3 py-3">J'ACCEPTE
+                        </button>
+                    </div>
+                    <div class="row">
+                        <stripe-checkout
+                            v-if="session_id"
+                            ref="checkoutRef"
+                            :pk="publishableKey"
+                            :sessionId="session_id"
+                        />
+                        <button @click="submit" class="btn btn-success py-3" :disabled="!accept_conditions">PAYER
+                            MAINTENANT
+                        </button>
                     </div>
                 </div>
             </div>
@@ -72,11 +93,18 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import HaircutService from "@/services/Haircut.service";
+import {StripeCheckout} from '@vue-stripe/vue-stripe';
+
 export default defineComponent({
     name: "PaymentView",
+    components: {
+        StripeCheckout
+    },
     data() {
         return {
-            accept_conditions: false
+            publishableKey: "pk_test_51MUYZQChGKmAiSAhkkbw2US2UjTQqJ3ASUTfeP80pYcCtW25RCEKvDFl2e8jr8GdgHOX9kbCtKEzctpFj3l3HXUU00yBskSgXS",
+            accept_conditions: false,
+            session_id: ''
         }
     },
     methods: {
@@ -97,8 +125,19 @@ export default defineComponent({
             });
         },
 
-        getStripeSessionID() {
+        submit() {
+            // You will be redirected to Stripe's secure checkout page
+            (this.$refs["checkoutRef"] as any).redirectToCheckout();
+        },
+
+        getStripeSessionID(prices: number) {
             this.accept_conditions = true
+            HaircutService.getSessionId(prices).then((response) => {
+                console.log(response.id)
+                this.session_id = response.id
+            }).catch((error) => {
+                this.$toast.error(error.response.data.message)
+            });
         }
     }
 });
