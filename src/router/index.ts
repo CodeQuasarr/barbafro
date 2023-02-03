@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
-import HomeView from '../views/home/HomeView.vue'
+import HomeView from "@/views/home/HomeView.vue"
 import PageNotFoundVew from "@/views/PageNotFoundView.vue";
 import LayoutView from "@/views/template/LayoutView.vue";
 import BarbershopView from "@/views/barbershop/BarbershopView.vue";

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white text-dark">
-    <HeaderComponent class="fixed-top" />
+    <HeaderComponent style="" class="fixed-top" />
     <div style="padding-top: 200px" class="container-fluid px-0 m-0">
       <RouterView />
     </div>

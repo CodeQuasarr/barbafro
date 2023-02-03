@@ -1,6 +1,7 @@
 import http from "@/http-common";
 import { GlobalResponse } from "@/types/GlobalType";
 import {User, UserLogResponse} from "@/types/UserType";
+import {HaircutCart} from "@/types/HaircutType";
 
 
 class UserService {
@@ -34,13 +35,13 @@ class UserService {
         return data;
     }
 
-    // async getAll(): Promise<UserCollection> {
-    //     const { data }: { data: UserCollection } = await http.get(
-    //         `/users`
-    //     );
-    //     return data;
-    // }
-    //
+    async getAll(): Promise<HaircutCart> {
+        const { data }: { data: HaircutCart } = await http.get(
+            `/users`
+        );
+        return data;
+    }
+
     // async get(id: number): Promise<User> {
     //     const { data }: { data: User } = await http.get(`/users/${id}`);
     //     return data;
