@@ -18,13 +18,13 @@
                                     </div>
                                     <p class="card-text"><strong>{{ item.price }} €</strong></p>
                                 </div>
-                                <div v-for="reservation in item.reservations" :key="`reservation_item_${reservation.id}_${item.id}`" class="d-flex align-items-center justify-content-end mb-1">
+                                <div v-for="(reservation, reservation_index) in item.reservations" :key="`reservation_item_${reservation.id}_${item.id}`" class="d-flex align-items-center justify-content-end mb-1">
                                     <div class="me-3">{{ reservation.start_date }} à {{ reservation.start_time }}</div>
-                                     <button class="btn btn-sm btn-danger"> <font-icon icon="eraser" /> </button>
+                                     <button @click="removeReservationInItemFromCart(index, reservation_index, reservation.id)" class="btn btn-sm btn-danger"> <font-icon icon="eraser" /> </button>
                                 </div>
                             </div>
                             <div class="text-end mb-2 me-2">
-                                <button class="btn btn-sm btn-dark">Supprimer</button>
+                                <button @click="removeItemFromCart(item.id, index)" class="btn btn-sm btn-dark">Supprimer</button>
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                         </p>
                     </div>
                     <div class="row">
-                        <button @click="accept_conditions = true" v-if="!accept_conditions" class="btn btn-success mb-3 py-3">J'ACCEPTE</button>
+                        <button @click="getStripeSessionID()" v-if="!accept_conditions" class="btn btn-success mb-3 py-3">J'ACCEPTE</button>
                         <button class="btn btn-success py-3" :disabled="!accept_conditions">COMPLETE L'ACHAT</button>
                     </div>
                 </div>
@@ -69,15 +69,39 @@
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {defineComponent} from "vue";
+import HaircutService from "@/services/Haircut.service";
+export default defineComponent({
     name: "PaymentView",
     data() {
         return {
             accept_conditions: false
         }
     },
-}
+    methods: {
+        removeItemFromCart(id: number, index: number) {
+            HaircutService.removeReservationFromCart(id).then(() => {
+                this.$toast.success('Réservation supprimée')
+                this.$store.commit('removeItemFromCart', index)
+            }).catch((error) => {
+                this.$toast.error(error.response.data.message)
+            });
+        },
+        removeReservationInItemFromCart(index: number, reservation_index: number, id: number) {
+            HaircutService.deleteReservationsFromCart(id).then(() => {
+                this.$toast.success('Réservation supprimée')
+                this.$store.commit('deleteReservations', {index, reservation_index})
+            }).catch((error) => {
+                this.$toast.error(error.response.data.message)
+            });
+        },
+
+        getStripeSessionID() {
+            this.accept_conditions = true
+        }
+    }
+});
 </script>
 
 <style scoped>

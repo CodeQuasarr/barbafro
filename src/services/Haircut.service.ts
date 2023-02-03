@@ -7,6 +7,7 @@ import {
     HaircutResponse
 } from "@/types/HaircutType";
 import http from "@/http-common";
+import {GlobalResponse} from "@/types/GlobalType";
 
 
 class HaircutService {
@@ -133,6 +134,17 @@ class HaircutService {
                     params: {start_date: date}
                 }
             );
+        return data;
+    }
+
+    async removeReservationFromCart(haircut_id: number): Promise<GlobalResponse> {
+        const { data }: { data: GlobalResponse } = await http.delete(`/haircuts/${haircut_id}`);
+        return data;
+    }
+
+    async deleteReservationsFromCart(reservation_id: number): Promise<GlobalResponse> {
+        const { data }: { data: GlobalResponse } = await http.delete(`/haircuts/reservation/${reservation_id}`);
+        console.log("haircut_id", data);
         return data;
     }
 }

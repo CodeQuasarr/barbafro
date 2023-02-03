@@ -85,6 +85,40 @@ export default createStore({
             localStorage.setItem("haircutCart", JSON.stringify(cart));
             localStorage.setItem("prices", JSON.stringify(state.prices));
         },
+
+        removeItemFromCart(state, index: number) {
+            console.log("state.cart.haircut_carts", state.cart.haircut_carts);
+            state.cart.haircut_carts.splice(index, 1);
+            console.log("state.cart.haircu", state.cart.haircut_carts);
+            state.prices.with_taxes = 0;
+            state.prices.taxes = 0;
+            state.prices.without_taxes = 0;
+            state.cart.haircut_carts.forEach((item) => {
+                item.price = item.price * item.reservations?.length;
+                state.prices.with_taxes += item.price;
+            });
+            state.prices.taxes = state.prices.with_taxes * 0.2;
+            state.prices.without_taxes = state.prices.with_taxes - state.prices.taxes;
+            localStorage.setItem("haircutCart", JSON.stringify(state.cart.haircut_carts));
+            localStorage.setItem("prices", JSON.stringify(state.prices));
+        },
+        // delete reservations in the item of the cart and update the cart in the local storage
+        deleteReservations(state, data: { index: number, reservation_index: number }) {
+            console.log("data", data);
+            state.cart.haircut_carts[data.index].reservations?.splice(data.reservation_index, 1);
+            state.prices.with_taxes = 0;
+            state.prices.taxes = 0;
+            state.prices.without_taxes = 0;
+            state.cart.haircut_carts.forEach((item) => {
+                item.price = item.price * item.reservations?.length;
+                state.prices.with_taxes += item.price;
+            });
+            state.prices.taxes = state.prices.with_taxes * 0.2;
+            state.prices.without_taxes = state.prices.with_taxes - state.prices.taxes;
+            localStorage.setItem("haircutCart", JSON.stringify(state.cart.haircut_carts));
+            localStorage.setItem("prices", JSON.stringify(state.prices));
+        },
+
         // Mutations are used to set the state values
         initializeStore(state) {
             if (localStorage.getItem("user")) {
