@@ -147,6 +147,20 @@ class HaircutService {
         console.log("haircut_id", data);
         return data;
     }
+
+    async getSessionId(price: number) {
+        const line_items = {
+            price_data: {
+                currency: 'eur',
+                unit_amount: price * 100,
+                product_data: {
+                    name: 'Haircut',
+                },
+            }
+        }
+        const { data } = await http.post("/stripe/checkout", line_items);
+        return data;
+    }
 }
 
 // Export a singleton instance in the global namespace

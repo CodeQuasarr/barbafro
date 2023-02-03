@@ -48,3 +48,8 @@ export type HaircutResponse = {
     message: string,
     success: boolean,
 }
+
+export type Payement = {
+    unit_amount: number
+    product_data: HaircutCart[]
+}

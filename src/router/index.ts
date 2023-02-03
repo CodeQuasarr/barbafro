@@ -9,12 +9,14 @@ import LoginView from "@/views/auth/LoginView.vue";
 import ForgotPasswordView from "@/views/auth/ForgotPasswordView.vue";
 import DashboardView from "@/views/afterLogin/dashboard/DashboardView.vue";
 import PaymentView from "@/views/afterLogin/payement/PaymentView.vue";
+import PaymentValidView from "@/views/afterLogin/payement/PaymentValidView.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {path: "/sign-up", name: "REGISTER", component: RegistrationView},
     {path: "/sign-in", name: "LOGIN", component: LoginView},
     {path: '/forgot-password', name: 'FORGOT_PASSWORD', component: ForgotPasswordView},
     {path: '/new-password', name: 'RESET_PASSWORD', component: ResetPasswordView },
+    {path: '/success', name: 'PAYMENT_VALID', component: PaymentValidView },
     {
         path: "/",
         redirect: "/",
