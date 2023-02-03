@@ -18,6 +18,10 @@
                                     </div>
                                     <p class="card-text"><strong>{{ item.price }} €</strong></p>
                                 </div>
+                                <div v-for="reservation in item.reservations" :key="`reservation_item_${reservation.id}_${item.id}`" class="d-flex align-items-center justify-content-end mb-1">
+                                    <div class="me-3">{{ reservation.start_date }} à {{ reservation.start_time }}</div>
+                                     <button class="btn btn-sm btn-danger"> <font-icon icon="eraser" /> </button>
+                                </div>
                             </div>
                             <div class="text-end mb-2 me-2">
                                 <button class="btn btn-sm btn-dark">Supprimer</button>
@@ -30,18 +34,18 @@
             <div class="card col-12 col-lg-4 border-bottom-0 border-5 border-start-0 border-end-0">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-title">Hors tax</h5>
+                        <h5 class="card-title"><strong>Hors taxe</strong></h5>
                         <h3><strong>{{ $store.getters.prices.without_taxes }}</strong></h3>
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <p class="card-text">TVA</p>
-                        <h3><strong>{{ $store.getters.prices.taxes }}</strong></h3>
+                        <p class="card-text"><strong>TVA</strong></p>
+                        <h3><strong>{{ $store.getters.prices.taxes }} €</strong></h3>
                     </div>
 
                     <div class="d-flex justify-content-between bg-dark text-white my-3 p-4">
                         <h3>TOTAL</h3>
-                        <h3><strong>{{ $store.getters.prices.with_taxes }}</strong></h3>
+                        <h3><strong>{{ $store.getters.prices.with_taxes }} €</strong></h3>
                     </div>
                     <div class="row text-start mt-5 mb-2">
                         <h3>TERMES ET CONDITIONS</h3>

@@ -41,6 +41,7 @@ export type HaircutCart = {
     price: number;
     name: string;
     description: string;
+    reservations: HairCutReservation[];
 };
 
 export type HaircutResponse = {

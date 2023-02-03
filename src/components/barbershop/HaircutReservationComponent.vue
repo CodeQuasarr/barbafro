@@ -201,9 +201,8 @@ export default defineComponent({
             };
             await HaircutService.addReservationToCart(reservation).then((response) => {
                 this.$toast.success("Réservation ajoutée au panier");
-                this.$store.dispatch("addHaircutCart", HaircutService.intentionToBookThisProduct);
+                this.$store.dispatch("addHaircutCart", response);
                 this.initFonctionalities();
-                console.log(this.$store.getters.cart);
             }).catch((error) => {
                 console.log(error);
             });

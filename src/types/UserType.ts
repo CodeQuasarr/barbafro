@@ -1,3 +1,5 @@
+import {HaircutCart} from "@/types/HaircutType";
+
 export type User = {
     id?: number;
     first_name?: string;
@@ -25,4 +27,5 @@ export type UserLogResponse = {
     user?: User;
     token?: string;
     token_type: string;
+    HaircutCart: HaircutCart[]
 };

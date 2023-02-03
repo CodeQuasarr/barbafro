@@ -73,15 +73,17 @@ export default createStore({
             state.haircutsCollection.massages = massages;
         },
         // cart mutations
-        setHaircutCart(state, cart: HaircutCart) {
-            state.cart.haircut_carts.push({
-                name: cart.name,
-                description: cart.description,
-                price: cart.price,
+        setHaircutCart(state, cart: HaircutCart[]) {
+            state.cart.haircut_carts = cart;
+            // calcul the prices of the cart without taxes  and with taxes 20%
+            cart.forEach((item) => {
+                item.price = item.price * item.reservations?.length;
+                state.prices.with_taxes += item.price;
             });
-            state.prices.with_taxes += cart.price;
             state.prices.taxes = state.prices.with_taxes * 0.2;
             state.prices.without_taxes = state.prices.with_taxes - state.prices.taxes;
+            localStorage.setItem("haircutCart", JSON.stringify(cart));
+            localStorage.setItem("prices", JSON.stringify(state.prices));
         },
         // Mutations are used to set the state values
         initializeStore(state) {
@@ -91,14 +93,22 @@ export default createStore({
             if (localStorage.getItem("token")) {
                 state.token = localStorage.getItem("token") || "";
             }
+            if (localStorage.getItem("haircutCart")) {
+                state.cart.haircut_carts = JSON.parse(localStorage.getItem("haircutCart") || "[]");
+            }
+            if (localStorage.getItem("prices")) {
+                state.prices = JSON.parse(localStorage.getItem("prices") || "{}");
+            }
         },
     },
     actions: {
 
         // login action to set the user and the token
         login({commit}, data: UserLogResponse) {
+            console.log("data", data)
             commit("setUser", data.user);
             commit("setToken", data.token);
+            commit("setHaircutCart", data.HaircutCart);
         },
         // logout action to clear the user and the token
         logout({commit}) {
@@ -113,6 +123,7 @@ export default createStore({
         },
         // cart actions
         addHaircutCart({commit}, cart: HaircutCart) {
+            console.log("cart", cart)
             commit("setHaircutCart", cart);
         }
     },

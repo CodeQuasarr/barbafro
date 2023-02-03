@@ -1,10 +1,18 @@
-import {AvailableHours, HairCut, HairCutCollection, HairCutReservation, HaircutResponse} from "@/types/HaircutType";
+import {
+    AvailableHours,
+    HairCut,
+    HaircutCart,
+    HairCutCollection,
+    HairCutReservation,
+    HaircutResponse
+} from "@/types/HaircutType";
 import http from "@/http-common";
 
 
 class HaircutService {
 
     intentionToBookThisProduct = {} as HairCut;
+    testt= {} as HaircutCart
     async getAll(): Promise<HairCutCollection> {
         const { data }: { data: HairCutCollection } = await http.get(
             `/haircuts`
@@ -12,11 +20,11 @@ class HaircutService {
         return data;
     }
 
-    async addReservationToCart(reservation: HairCutReservation): Promise<HaircutResponse> {
+    async addReservationToCart(reservation: HairCutReservation): Promise<HairCutReservation> {
         if (this.intentionToBookThisProduct.id != null) {
             reservation.haircut_id = this.intentionToBookThisProduct.id;
         }
-        const { data }: { data: HaircutResponse } = await http.post(`/haircuts/reservation`, reservation);
+        const { data }: { data: HairCutReservation } = await http.post(`/haircuts/reservation`, reservation);
         return data;
     }
 
@@ -96,10 +104,8 @@ class HaircutService {
             },
         ];
         if ( !unavailableHours.length ) {
-            console.log("No unavailable hours");
             return initialAvailableHours;
         } else {
-            console.log("unavailable hours")
             return initialAvailableHours.map((availableHour) => {
                 unavailableHours.forEach((unavailableHour) => {
                     if ( availableHour.start_time === unavailableHour.start_time ) {
