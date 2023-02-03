@@ -8,6 +8,7 @@ import ResetPasswordView from "@/views/auth/ResetPasswordView.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import ForgotPasswordView from "@/views/auth/ForgotPasswordView.vue";
 import DashboardView from "@/views/afterLogin/dashboard/DashboardView.vue";
+import PaymentView from "@/views/afterLogin/payement/PaymentView.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {path: "/sign-up", name: "REGISTER", component: RegistrationView},
@@ -22,6 +23,7 @@ const routes: Array<RouteRecordRaw> = [
             {path: "/dashboard", name: "DASHBOARD", component: DashboardView },
             {path: "/", name: "HOME", component: HomeView},
             { path: "/liste-des-styles-de-coupe", name: "HAIR_CUT_LIST", component: BarbershopView },
+            { path: "/mon-panier", name: "PAYMENT", component: PaymentView}
         ],
     },
     { path: "/:pathMatch(.*)*", name: "NOT_FOUND", component: PageNotFoundVew },

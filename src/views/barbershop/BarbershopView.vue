@@ -120,7 +120,12 @@ export default defineComponent({
          * @param item
          */
         intentionToBookThisProduct(item: HairCut) {
-            HaircutService.intentionToBookThisProduct = item;
+            HaircutService.intentionToBookThisProduct = {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                description: item.description,
+            };
         },
     },
     mounted() {

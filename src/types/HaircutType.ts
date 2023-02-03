@@ -11,7 +11,7 @@ export type HairCutReservation = {
     start_date: string;
     start_time: string | null;
     haircut_id: number;
-    user_id: number;
+    user_id?: number;
     status: string;
 };
 export type HairCut = {

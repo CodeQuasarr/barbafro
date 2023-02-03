@@ -45,7 +45,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">PANIER (<strong>{{ $store.getters.cartCount }}</strong>)</a>
+                                <router-link :to="{name: 'PAYMENT'}" class="nav-link">PANIER (<strong>{{ $store.getters.cartCount }}</strong>)</router-link>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">CONTACT</a>

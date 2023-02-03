@@ -122,7 +122,7 @@ class HaircutService {
      */
     async getUnavailableHours(date: string): Promise<AvailableHours[]> {
         const { data }: { data: AvailableHours[] } = await http
-            .get(`/unavailable-hours/${1}`,
+            .get(`/unavailable-hours/${this.intentionToBookThisProduct.id}`,
                 {
                     params: {start_date: date}
                 }
